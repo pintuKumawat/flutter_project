@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_sign_task/screePage/screen/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../blocs/registration_bloc.dart';
 import 'login_screen.dart';
 
 
@@ -19,14 +22,57 @@ class _SplashScreen extends State<SplashScreen> {
   void initState() {
     super.initState();
 
+    afterSplash();
 
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-    });
   }
+
+
+  void afterSplash() async{
+
+    Future.delayed(Duration(seconds: 3));
+
+    final SharedPreferences pref= await SharedPreferences.getInstance();
+    bool? isUserLogin = pref.getBool("isUserLogin") ?? false;
+    // await pref.setString('userEmail', RegistrationBloc().emailController.text);
+    // await pref.setString('userEmail', RegistrationBloc().passwordController.text);
+
+    if(isUserLogin){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+    }else{
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+    }
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  //
+  // Future<void> checkUserStatus() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false; // Default false
+  //
+  //   Timer(Duration(seconds: 3), () {
+  //     if (isLoggedIn) {
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => LoginScreen()),
+  //       );
+  //     } else {
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => LoginScreen()),
+  //       );
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +95,7 @@ class _SplashScreen extends State<SplashScreen> {
       ),
     );
   }
+
 }
 
 

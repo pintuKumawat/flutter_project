@@ -88,18 +88,7 @@ class LoginScreen extends StatelessWidget {
                             keyboardType: TextInputType.phone,
 
                             validator: LogInBloc.logInValidation,
-                            // onChanged: (value) {
-                            //   _formKey.currentState?.validate();
-                            // },
-                            // validator: (value) {
-                            //   if (value!.isEmpty) {
-                            //     return "Please enter your phone number";
-                            //   } else
-                            //   if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
-                            //     return "Please enter valid phone number";
-                            //   }
-                            //   return null;
-                            // },
+
 
                             decoration: InputDecoration(
                               counterText: "",

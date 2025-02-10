@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:login_sign_task/widgets/common_widgets.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../blocs/registration_bloc.dart';
+import 'home_screen.dart';
 import 'otp_verify_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -13,6 +16,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreen extends State<RegisterScreen> {
   // bool _isObscured =
+
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   @override
@@ -151,22 +155,6 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   validator: registrationBloc.emailValidate,
-                                  // onChanged: (String value){
-                                  //    validationService.emailValidate(value);
-                                  // },
-
-                                  // onChanged: (value) {
-                                  //   _formkey.currentState?.validate();
-                                  // },
-                                  // validator: (value) {
-                                  //   if (value!.isEmpty) {
-                                  //     return " Please enter your mail";
-                                  //   } else if (!RegExp(
-                                  //           r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
-                                  //       .hasMatch(value)) {
-                                  //     return 'Please enter valid email address';
-                                  //   }
-                                  // },
 
                                   decoration: InputDecoration(
                                     filled: true,
@@ -218,23 +206,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       registrationBloc.mobileNumberController,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
-
                                   validator: registrationBloc.mobileValidate,
-                                  //     onChanged: (String value){
-                                  //       validationService.mobileValidate(value);
-                                  //     },
-
-                                  // onChanged: (value) {
-                                  //   _formkey.currentState?.validate();
-                                  // },
-                                  // validator: (value) {
-                                  //   if (value!.isEmpty) {
-                                  //     return 'Enter your phone number';
-                                  //   } else if (!RegExp(r'^[0-9]{10}$')
-                                  //       .hasMatch(value)) {
-                                  //     return "Please Enter valid phone name ";
-                                  //   }
-                                  // },
                                   decoration: InputDecoration(
                                     counterText: "",
                                     filled: true,
@@ -284,22 +256,6 @@ class _RegisterScreen extends State<RegisterScreen> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   validator: registrationBloc.passwordValidate,
-                                  // onChanged: (String value){
-                                  //   validationService.passwordValidate(value);
-                                  // },
-
-                                  // onChanged: (value) {
-                                  //   _formkey.currentState?.validate();
-                                  // },
-                                  // validator: (value) {
-                                  //   if (value!.isEmpty) {
-                                  //     return " Please Enter your password";
-                                  //   } else if (!RegExp(
-                                  //           r"^(?=.*[A-Za-z])(?=.*\d).{8,}$")
-                                  //       .hasMatch(value)) {
-                                  //     return 'Minimum 8 Characters, At Least One Letter and One Number';
-                                  //   }
-                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     border: InputBorder.none,
@@ -338,68 +294,59 @@ class _RegisterScreen extends State<RegisterScreen> {
                           ),
                           Consumer<RegistrationBloc>(
                               builder: (context, registrationBloc, child) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20.0, right: 20),
-                              child: GestureDetector(
-                                // onTap: () {
-                                //   if (!_formkey.currentState!.validate()) {
-                                //     print("something is wrong");
-                                //     ScaffoldMessenger.of(context)
-                                //         .showSnackBar(SnackBar(
-                                //       content:
-                                //           Text("Please enter valid detais "),
-                                //       backgroundColor: Colors.red.shade500,
-                                //     ));
-                                //   } else {
-                                //     registrationBloc.handleRegistration();
-                                //     Navigator.push(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //           builder: (context) =>
-                                //               OtpVerifyScreentp(),
-                                //         ));
-                                //   }
-                                // },
+                            return registrationBloc.isLoading
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0, right: 20),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        final SharedPreferences pref=await SharedPreferences.getInstance();
 
-                                onTap: () async {
-                                  try {
-                                    await registrationBloc
-                                        .signUpwithEmailPassword()
-                                        .then((value) => Navigator.push(
+                                        await pref.setBool("isUserLogin", true);
+                                        await pref.setString('userEmail', RegistrationBloc().emailController.text);
+                                        await pref.setString('userEmail', RegistrationBloc().passwordController.text);
+
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+
+                                        FocusScope.of(context).requestFocus(new FocusNode());
+                                        if (_formkey.currentState!.validate()) {
+                                          _formkey.currentState!.save();
+                                          await registrationBloc
+                                              .signUpwithEmailPassword();
+                                          if(registrationBloc.hasError){
+                                            openSnakeBar(context,registrationBloc.errorCode.toString() );
+                                          }else{
+                                            afterSignIn(context);
+                                          }
+                                        } else {
+                                          openSnakeBar(
                                               context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OtpVerifyScreentp(),
-                                              )));
-                                  } catch (e) {
-                                    ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content:
-                                              Text("Please enter valid detais "),
-                                          backgroundColor: Colors.red.shade500,
-                                        ));
-                                  }
-                                },
-                                child: Container(
-                                  height: 45,
-                                  child: Center(
-                                      child: Text(
-                                    'Register',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15),
-                                  )),
-                                  decoration: BoxDecoration(
-                                    color: Colors.brown,
-                                    // Background color
-                                    borderRadius: BorderRadius.circular(
-                                        11), // Rounded corners
-                                  ),
-                                ),
-                              ),
-                            );
+                                              registrationBloc.errorCode
+                                                  .toString());
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 45,
+                                        child: Center(
+                                            child: Text(
+                                          'Register',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15),
+                                        )),
+                                        decoration: BoxDecoration(
+                                          color: Colors.brown,
+                                          // Background color
+                                          borderRadius: BorderRadius.circular(
+                                              11), // Rounded corners
+                                        ),
+                                      ),
+                                    ),
+                                  );
                           })
                         ],
                       ),
@@ -412,3 +359,22 @@ class _RegisterScreen extends State<RegisterScreen> {
         ));
   }
 }
+
+afterSignIn(BuildContext context){
+  Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpVerifyScreentp()));
+}
+
+
+
+//
+// userLogin()async{
+//   final SharedPreferences pref=await SharedPreferences.getInstance();
+//
+//   await pref.setBool("isUserLogin", true);
+//  await pref.setString('userEmail', RegistrationBloc().emailController.text);
+//   await pref.setString('userEmail', RegistrationBloc().passwordController.text);
+//
+//   Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+//
+//
+// }
