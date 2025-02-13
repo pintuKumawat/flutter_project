@@ -13,6 +13,8 @@ import 'login_screen.dart';
 
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreen createState() => _SplashScreen();
 }
@@ -29,7 +31,7 @@ class _SplashScreen extends State<SplashScreen> {
 
   void afterSplash() async{
 
-    Future.delayed(Duration(seconds: 3));
+    Future.delayed(const Duration(seconds: 3));
 
     final SharedPreferences pref= await SharedPreferences.getInstance();
     bool? isUserLogin = pref.getBool("isUserLogin") ?? false;
@@ -89,7 +91,7 @@ class _SplashScreen extends State<SplashScreen> {
             width: 300,
             height: 300,
             color: Colors.grey.shade300,
-            child: Image(image: AssetImage("assets/images/coffelogo-removebg.png")),
+            child: const Image(image: AssetImage("assets/images/coffelogo-removebg.png")),
           ),
         ),
       ),

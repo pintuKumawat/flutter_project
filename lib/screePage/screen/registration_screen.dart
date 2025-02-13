@@ -10,6 +10,8 @@ import 'home_screen.dart';
 import 'otp_verify_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   _RegisterScreen createState() => _RegisterScreen();
 }
@@ -38,7 +40,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                     child: Container(
                       height: 170,
                       width: 350,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         image: DecorationImage(
                           image:
                               AssetImage("assets/images/coffecup-removebg.png"),
@@ -47,13 +49,13 @@ class _RegisterScreen extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
                       ),
@@ -62,7 +64,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Column(
                         children: [
-                          Center(
+                          const Center(
                             child: Text(
                               "Register",
                               style: TextStyle(
@@ -72,7 +74,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
@@ -86,7 +88,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Padding(
@@ -134,7 +136,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Padding(
@@ -185,7 +187,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                               }),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Padding(
@@ -235,7 +237,7 @@ class _RegisterScreen extends State<RegisterScreen> {
                               }),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Padding(
@@ -289,13 +291,13 @@ class _RegisterScreen extends State<RegisterScreen> {
                               }),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Consumer<RegistrationBloc>(
                               builder: (context, registrationBloc, child) {
                             return registrationBloc.isLoading
-                                ? Center(
+                                ? const Center(
                                     child: CircularProgressIndicator(),
                                   )
                                 : Padding(
@@ -303,15 +305,15 @@ class _RegisterScreen extends State<RegisterScreen> {
                                         left: 20.0, right: 20),
                                     child: GestureDetector(
                                       onTap: () async {
-                                        final SharedPreferences pref=await SharedPreferences.getInstance();
+                                        // final SharedPreferences pref=await SharedPreferences.getInstance();
 
-                                        await pref.setBool("isUserLogin", true);
-                                        await pref.setString('userEmail', RegistrationBloc().emailController.text);
-                                        await pref.setString('userEmail', RegistrationBloc().passwordController.text);
+                                        // await pref.setBool("isUserLogin", true);
+                                        // await pref.setString('userEmail', RegistrationBloc().emailController.text);
+                                        // await pref.setString('userEmail', RegistrationBloc().passwordController.text);
 
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
 
-                                        FocusScope.of(context).requestFocus(new FocusNode());
+                                        FocusScope.of(context).requestFocus(FocusNode());
                                         if (_formkey.currentState!.validate()) {
                                           _formkey.currentState!.save();
                                           await registrationBloc
@@ -330,6 +332,12 @@ class _RegisterScreen extends State<RegisterScreen> {
                                       },
                                       child: Container(
                                         height: 45,
+                                        decoration: BoxDecoration(
+                                          color: Colors.brown,
+                                          // Background color
+                                          borderRadius: BorderRadius.circular(
+                                              11), // Rounded corners
+                                        ),
                                         child: Center(
                                             child: Text(
                                           'Register',
@@ -338,12 +346,6 @@ class _RegisterScreen extends State<RegisterScreen> {
                                               fontWeight: FontWeight.w500,
                                               fontSize: 15),
                                         )),
-                                        decoration: BoxDecoration(
-                                          color: Colors.brown,
-                                          // Background color
-                                          borderRadius: BorderRadius.circular(
-                                              11), // Rounded corners
-                                        ),
                                       ),
                                     ),
                                   );

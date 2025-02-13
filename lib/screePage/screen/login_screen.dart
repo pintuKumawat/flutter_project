@@ -9,6 +9,8 @@ class LoginScreen extends StatelessWidget {
   TextEditingController phoneController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               child: Container(
                 height: 170,
                 width: 350,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/images/coffecup-removebg.png"),
                     fit: BoxFit.cover,
@@ -33,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -41,14 +43,14 @@ class LoginScreen extends StatelessWidget {
 
               decoration: BoxDecoration(
                   color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
               child: Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Column(
                   children: [
-                    Center(
+                    const Center(
                         child: Text(
                       "Login",
                       style: TextStyle(
@@ -56,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     )),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -68,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                             fontSize: 13, color: Colors.grey.shade600),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Padding(
@@ -116,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                         }),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Padding(
@@ -127,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                             print("something is wrong");
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content:
-                                  Text("Please enter valid mobile number "),
+                                  const Text("Please enter valid mobile number "),
                               backgroundColor: Colors.red.shade500,
                             ));
 
@@ -141,6 +143,11 @@ class LoginScreen extends StatelessWidget {
                         },
                         child: Container(
                           height: 45,
+                          decoration: BoxDecoration(
+                            color: Colors.brown, // Background color
+                            borderRadius:
+                                BorderRadius.circular(11), // Rounded corners
+                          ),
                           child: Center(
                               child: Text(
                             'Login',
@@ -149,11 +156,6 @@ class LoginScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 20),
                           )),
-                          decoration: BoxDecoration(
-                            color: Colors.brown, // Background color
-                            borderRadius:
-                                BorderRadius.circular(11), // Rounded corners
-                          ),
                         ),
                       ),
                     ),

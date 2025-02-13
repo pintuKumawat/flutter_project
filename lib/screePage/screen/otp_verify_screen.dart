@@ -3,15 +3,17 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class OtpVerifyScreentp extends StatelessWidget {
+  const OtpVerifyScreentp({super.key});
+
   @override
   Widget build(BuildContext context) {
-     Widget OtpResend = Text(
+     Widget OtpResend = const Text(
       "Resend",
       style: TextStyle(fontSize: 16, color: Colors.brown),
     );
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
+        leading: const BackButton(),
         backgroundColor: Colors.grey.shade200,
       ),
         body: Center(
@@ -22,19 +24,19 @@ class OtpVerifyScreentp extends StatelessWidget {
             color: Colors.grey.shade200,
             child: Column(
               children: [
-                SizedBox(height: 50,),
-                Text(
+                const SizedBox(height: 50,),
+                const Text(
                   "OTP Verification",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text(
                   "Enter 6 digit OTP Sent you on your mobile \n number +911234567890",
                   textAlign: TextAlign.center,style: TextStyle(color: Colors.grey.shade500),
                 ),
-                SizedBox(height: 25,),
+                const SizedBox(height: 25,),
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0,right: 20),
                   child: Container(
@@ -59,13 +61,18 @@ class OtpVerifyScreentp extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0, right: 20),
                   child: Container(
                     height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.brown, // Background color
+                      borderRadius:
+                      BorderRadius.circular(11), // Rounded corners
+                    ),
                     child: Center(
                         child: Text(
                           'Verify',
@@ -74,14 +81,9 @@ class OtpVerifyScreentp extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               fontSize: 15),
                         )),
-                    decoration: BoxDecoration(
-                      color: Colors.brown, // Background color
-                      borderRadius:
-                      BorderRadius.circular(11), // Rounded corners
-                    ),
                   ),
                 ),
-                SizedBox(height: 15,),
+                const SizedBox(height: 15,),
                 // Text("Didn't receive OTP?  ",style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500),)
                 RichText(
                   text: TextSpan(
@@ -96,7 +98,7 @@ class OtpVerifyScreentp extends StatelessWidget {
 
                           },
 
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.brown,
                           fontWeight: FontWeight.bold,
 
