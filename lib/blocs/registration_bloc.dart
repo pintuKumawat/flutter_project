@@ -121,7 +121,7 @@ class RegistrationBloc extends ChangeNotifier {
 
       await user.getIdToken();
       _uid = user.uid;
-      saveUserInfoToSp(uid);
+      // saveUserInfoToSp(uid);
 
       await user.getIdToken();
       print(user.getIdToken());
@@ -136,6 +136,7 @@ class RegistrationBloc extends ChangeNotifier {
       notifyListeners();
     }
   }
+}
 
   // cloud FireStore
 
@@ -151,18 +152,25 @@ class RegistrationBloc extends ChangeNotifier {
   //   // pref.setString("userEmail", userEmail.text);
   // }
 
-  saveUserInfoToSp(String? uid) async {
-    if (uid == null) return; // Handle null UID
+//   saveUserInfoToSp(String? uid) async {
+//     if (uid == null) return; // Handle null UID
+//     final DocumentReference ref = FirebaseFirestore.instance.collection('users').doc(_uid);
+// var userData = {
+//       "email": emailController.text,
+//       "name": userNameController.text, // Fixed incorrect field
+//       "uid": uid
+//     };
+//     await ref.set(userData);
+//     // await FirebaseFirestore.instance.collection("users").doc(uid).set({
+//     //   "email": emailController.text,
+//     //   "name": userNameController.text, // Fixed incorrect field
+//     //   "uid": uid
+//     // });
+//
+//     final SharedPreferences pref = await SharedPreferences.getInstance();
+//     await pref.setString("userEmail", emailController.text);
+//     await pref.setString("userName", userNameController.text);
+//   }
+//
+// }
 
-    await FirebaseFirestore.instance.collection("users").doc(uid).set({
-      "email": emailController.text,
-      "name": userNameController.text, // Fixed incorrect field
-      "uid": uid
-    });
-
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("userEmail", emailController.text);
-    await pref.setString("userName", userNameController.text);
-  }
-
-}

@@ -1,10 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_sign_task/blocs/log_in_bloc.dart';
 import 'package:login_sign_task/blocs/registration_bloc.dart';
-import 'package:login_sign_task/screePage/screen/splash_screen.dart';
+import 'package:login_sign_task/firebase_options.dart';
+import 'package:login_sign_task/screePage/screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -26,7 +32,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SplashScreen()
+        home: HomeScreen()
       ),
     );
   }
